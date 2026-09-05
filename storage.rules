@@ -1,0 +1,30 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return isAuthenticated() && (
+        request.auth.token.admin == true ||
+        request.auth.token.email == 'saurabhcore31@gmail.com' ||
+        request.auth.token.email == 'saurabh22102@gmail.com'
+      );
+    }
+
+    // Public portfolio media: public can read, only authorized admin can write/delete
+    match /{folder}/{fileName} {
+      allow read: if true;
+      allow create, update: if isAdmin() && request.resource.size < 30 * 1024 * 1024;
+      allow delete: if isAdmin();
+    }
+
+    match /{folder}/{subfolder}/{fileName} {
+      allow read: if true;
+      allow create, update: if isAdmin() && request.resource.size < 30 * 1024 * 1024;
+      allow delete: if isAdmin();
+    }
+  }
+}

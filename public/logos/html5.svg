@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none">
+  <!-- Top HTML text -->
+  <path d="M22 6h4.5v4.2h3.5V6h4.5v12h-4.5v-4.5h-3.5V18H22V6zm14 0h12v3.4h-3.8V18h-4.4V9.4H36V6zm14 0h4.2l3.4 5.6 3.4-5.6h4.2V18h-4V11.2l-3.6 5.8h-0.2L48 11.2V18h-4V6zm18 0h4.4v8.6h5.8V18H68V6z" fill="#E34F26"/>
+  <!-- Orange Shield -->
+  <path d="M16 22l6.8 68 27.2 7.5 27.2-7.5L84 22H16z" fill="#E34F26"/>
+  <path d="M50 93.8l23.5-6.5L79.6 28H50v65.8z" fill="#EF652A"/>
+  <!-- White & light gray "5" -->
+  <path d="M50 41.5h12.8l-.9 10.5H50v8.6h11.2l-1 11.5-10.2 2.8v9l17.7-4.9.4-4.5 2-22.5.3-3.6.6-6.9H50v-0.5z" fill="#FFFFFF"/>
+  <path d="M50 41.5H37.2l.3 3.6.6 6.9H50v-8.6H38.2l.8 9.3 11 3v-8.9l-.3.1-6.1-1.6-.4-4.5H50v-4.2z" fill="#EBEBEB"/>
+  <path d="M50 50.6v8.6H38.5l.8 9.3 10.7 3v8.9l-17.7-4.9-1.2-13.8-.3-3.4-.6-6.9-.3-3.4h20.1v2.6z" fill="#EBEBEB"/>
+</svg>

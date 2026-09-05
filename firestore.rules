@@ -1,0 +1,91 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper functions for authorization
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isAuthorizedAdmin() {
+      return isAuthenticated() && (
+        request.auth.token.admin == true ||
+        request.auth.token.email in ['saurabhcore31@gmail.com', 'saurabh22102@gmail.com']
+      );
+    }
+
+    // Projects: Public can read portfolio projects. Only authorized admin can create, update, delete.
+    match /projects/{projectId} {
+      allow read: if true;
+      allow create, update, delete: if isAuthorizedAdmin();
+    }
+
+    // Experience: Public reads entries. Only authorized admin can create, update, delete.
+    match /experience/{expId} {
+      allow read: if true;
+      allow create, update, delete: if isAuthorizedAdmin();
+    }
+
+    // Skills & Tools: Public reads items. Only authorized admin can create, update, delete.
+    match /skills/{skillId} {
+      allow read: if true;
+      allow create, update, delete: if isAuthorizedAdmin();
+    }
+
+    // Credentials: Public reads credentials. Only authorized admin can create, update, delete.
+    match /credentials/{credId} {
+      allow read: if true;
+      allow create, update, delete: if isAuthorizedAdmin();
+    }
+
+    // Testimonials: Public reads testimonials. Only authorized admin can create, update, delete.
+    match /testimonials/{testId} {
+      allow read: if true;
+      allow create, update, delete: if isAuthorizedAdmin();
+    }
+
+    // Site Content (home, happicore, contact, profile): Public can read, only authorized admin can write.
+    match /siteContent/{sectionId} {
+      allow read: if true;
+      allow create, update, delete: if isAuthorizedAdmin();
+    }
+
+    // Media library metadata: Public can read, only authorized admin can write.
+    match /media/{mediaId} {
+      allow read: if true;
+      allow create, update, delete: if isAuthorizedAdmin();
+    }
+
+    // Activity log & private settings: strictly Admin-only.
+    match /activities/{actId} {
+      allow read, write: if isAuthorizedAdmin();
+    }
+
+    match /settings/{settingId} {
+      allow read, write: if isAuthorizedAdmin();
+    }
+
+    // Client Inquiries: Public can create an inquiry with valid fields. Admin can read, update, delete.
+    match /inquiries/{inquiryId} {
+      allow create: if request.resource.data.name is string &&
+                       request.resource.data.name.size() > 0 &&
+                       request.resource.data.name.size() < 200 &&
+                       request.resource.data.email is string &&
+                       request.resource.data.email.size() > 3 &&
+                       request.resource.data.email.size() < 200 &&
+                       request.resource.data.message is string &&
+                       request.resource.data.message.size() > 0 &&
+                       request.resource.data.message.size() < 10000;
+      allow read, update, delete: if isAuthorizedAdmin();
+    }
+
+    // Admin Notification Push Tokens: only authorized admin can register, update, or read
+    match /adminNotificationTokens/{tokenId} {
+      allow read, write: if isAuthorizedAdmin();
+    }
+
+    match /users/{userId} {
+      allow read, write: if isAuthenticated() && (request.auth.uid == userId || isAuthorizedAdmin());
+    }
+  }
+}
